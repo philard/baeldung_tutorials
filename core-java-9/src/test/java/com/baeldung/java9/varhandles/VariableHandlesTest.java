@@ -24,7 +24,7 @@ public class VariableHandlesTest {
           .findVarHandle(VariableHandlesTest.class, "publicTestVariable", int.class);
 
         assertThat(publicIntHandle.coordinateTypes().size() == 1);
-        assertThat(publicIntHandle.coordinateTypes().get(0) == VariableHandles.class);
+        assertThat(publicIntHandle.coordinateTypes().get(0) == Integer.class);
 
     }
 
