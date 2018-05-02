@@ -7,14 +7,21 @@ import javax.jms.JMSException;
 import javax.jms.MapMessage;
 import javax.jms.Message;
 import javax.jms.Session;
+import java.util.Map;
 
 public class SampleMessageConverter implements MessageConverter {
 
     public Message toMessage(Object object, Session session) throws JMSException, MessageConversionException {
-        Employee employee = (Employee) object;
         MapMessage message = session.createMapMessage();
-        message.setString("name", employee.getName());
-        message.setInt("age", employee.getAge());
+        if(object instanceof Employee) {
+            Employee employee = (Employee) object;
+            message.setString("name", employee.getName());
+            message.setInt("age", employee.getAge());
+        } else {
+            Map employee = (Map) object;
+            message.setString("name", (String) employee.get("name"));
+            message.setInt("age", (Integer) employee.get("age"));
+        }
         return message;
     }
 

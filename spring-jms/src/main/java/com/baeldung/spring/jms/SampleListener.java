@@ -7,12 +7,15 @@ import javax.jms.Message;
 import javax.jms.MessageListener;
 import javax.jms.Queue;
 import javax.jms.TextMessage;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 
 public class SampleListener implements MessageListener {
 
     private JmsTemplate jmsTemplate;
     private Queue queue;
+    public List<Message> consumedElements = new LinkedList<>();
 
     public void setJmsTemplate(JmsTemplate jmsTemplate) {
         this.jmsTemplate = jmsTemplate;
@@ -23,6 +26,7 @@ public class SampleListener implements MessageListener {
     }
 
     public void onMessage(Message message) {
+        consumedElements.add(message);
         if (message instanceof TextMessage) {
             try {
                 String msg = ((TextMessage) message).getText();
